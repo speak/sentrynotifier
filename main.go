@@ -41,13 +41,14 @@ func main() {
 	}
 
 	// Create the Raven Client
-	ravenClient, err := raven.NewClient(sentry_dsn, map[string]string{"environment": app_environment, "server_name": hostname})
+	ravenClient, err := raven.NewClient(sentry_dsn, map[string]string{"environment": app_environment})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Set up the packet to send
 	packet := raven.NewPacket(report, raven.NewException(errors.New(report), raven.NewStacktrace(0, 5, nil)))
+	packet.ServerName = hostname
 
 	// Send the packet
 	_, errch := ravenClient.Capture(packet, nil)
