@@ -51,14 +51,13 @@ func main() {
 	packet.ServerName = hostname
 
 	// Send the packet
-	_, errch := ravenClient.Capture(packet, nil)
-
+	id, errch := ravenClient.Capture(packet, nil)
 	// Handle Sentry response
 	if err := <-errch; err != nil {
 		log.Fatalf("Error sending to Raven: %v", err)
-	} else {
-		log.Printf("Sent error to Sentry: %v", err)
 	}
+
+	log.Printf("Sent error with ID %v to Sentry: %v", id, report)
 
 	// Quit
 	os.Exit(0)
