@@ -63,7 +63,4 @@ func main() {
 	}
 
 	log.Printf("Sent error with ID %v to Sentry: %v", id, report)
-
-	// Quit
-	os.Exit(0)
 }
